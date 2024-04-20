@@ -1,10 +1,13 @@
 import { IonButton, IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import React, { useState, useEffect } from 'react';
-import firebase from 'firebase/app';
-import 'firebase/auth'; // if you need authentication
 import './Tab1.css';
+import * as firebase from 'firebase/app'
+import 'firebase/firestore'
+
+const firestore = firebase.firestore()
 
 const Tab1: React.FC = () => {
+
   class TimeCard {
 
   }
