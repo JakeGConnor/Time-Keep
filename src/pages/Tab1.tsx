@@ -1,10 +1,10 @@
 import { IonButton, IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import React, { useState, useEffect } from 'react';
+import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { firestore, storage, auth } from '../firebase/firebaseConfig';
+import { updateProfile } from 'firebase/auth';
 import './Tab1.css';
-import * as firebase from 'firebase/app'
-import 'firebase/firestore'
-
-const firestore = firebase.firestore()
 
 const Tab1: React.FC = () => {
 
@@ -13,6 +13,8 @@ const Tab1: React.FC = () => {
   }
 
   const [currentDate, setCurrentDate] = useState<string>('');
+
+  const holdTime = collection(firestore, 'holdTime');
 
   const clockIn = () => {
     const currtime = {currentDate};
@@ -25,9 +27,6 @@ const Tab1: React.FC = () => {
     }, 1000); // Update every second
 
     return () => clearInterval(interval); // Cleanup on component unmount
-  
-    
-  
   }, []);
 
   return (
