@@ -8,17 +8,22 @@ import './Tab1.css';
 
 const Tab1: React.FC = () => {
 
-  class TimeCard {
-
-  }
-
   const [currentDate, setCurrentDate] = useState<string>('');
 
-  const holdTime = collection(firestore, 'holdTime');
+  const clockIn = async () => {
 
-  const clockIn = () => {
-    const currtime = {currentDate};
-    console.log(currtime);
+    const holdTime = collection(firestore, 'holdTime');
+    const timeDoc = {
+      currtime: {currentDate},
+      user: "Jake",
+    };
+
+    try {
+      await addDoc(holdTime, timeDoc);
+      console.log('Document added successfully!');
+    } catch (error) {
+      console.error('Error adding document: ', error);
+    }
   };
 
   useEffect(() => {
