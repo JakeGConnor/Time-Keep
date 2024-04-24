@@ -1,0 +1,16 @@
+.Footer {
+    position: fixed;
+    bottom: 0;
+    padding: 10px; 
+}
+
+.NewJob {
+    width: 100%;
+    --background: #670000;
+    --color: white;
+}
+
+h1 {
+    display: flex;
+    justify-content: center;
+}

@@ -46,7 +46,7 @@ const Tab1: React.FC = () => {
       <IonContent fullscreen id="T1B">
         <IonHeader collapse="condense">
           <IonToolbar>
-            <IonTitle size="large">Time Clock</IonTitle>
+            <IonTitle id="PT" size="large">Time Clock</IonTitle>
           </IonToolbar>
         </IonHeader>
         <p>{currentDate}</p>
