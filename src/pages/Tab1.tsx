@@ -1,28 +1,30 @@
 import { IonButton, IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import React, { useState, useEffect } from 'react';
-import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
-import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { firestore, storage, auth } from '../firebase/firebaseConfig';
-import { updateProfile } from 'firebase/auth';
+import { addDoc, collection } from 'firebase/firestore';
+import { firestore } from '../firebase/firebaseConfig';
 import './Tab1.css';
 
 const Tab1: React.FC = () => {
-
+  const [clockedIn, setClockedIn] = useState<boolean>(false);
   const [currentDate, setCurrentDate] = useState<string>('');
 
-  const clockIn = async () => {
-
+  const clockInOut = async () => {
     const holdTime = collection(firestore, 'holdTime');
     const timeDoc = {
-      currtime: {currentDate},
+      currtime: { currentDate },
       user: "Jake",
     };
-
+    
     try {
-      await addDoc(holdTime, timeDoc);
-      console.log('Document added successfully!');
+      if (clockedIn) {
+        await addDoc(holdTime, timeDoc);
+        console.log('Clock Out: Document added successfully!');
+      } else {
+        console.log('Clock In');
+      }
+      setClockedIn(prevState => !prevState); // Toggle clockedIn state based on previous state
     } catch (error) {
-      console.error('Error adding document: ', error);
+      console.error('Error: ', error);
     }
   };
 
@@ -48,7 +50,11 @@ const Tab1: React.FC = () => {
           </IonToolbar>
         </IonHeader>
         <p>{currentDate}</p>
-        <IonButton className="clockIn" onClick={clockIn}>Clock In</IonButton> 
+        <IonContent>
+          <IonButton className="clockIn" onClick={clockInOut}>
+            {clockedIn ? "Clock Out" : "Clock In"}
+          </IonButton>
+        </IonContent>
       </IonContent>
     </IonPage>
   );
