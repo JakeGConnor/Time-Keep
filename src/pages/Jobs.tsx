@@ -1,8 +1,8 @@
 import { IonContent, IonFooter, IonHeader, IonPage, IonList, IonItem, IonTitle, IonToolbar, IonButton, IonPopover, IonInput } from '@ionic/react';
-import './Jobs.css';
 import React, { useState, useEffect } from 'react';
 import { addDoc, collection } from 'firebase/firestore';
 import { firestore } from '../firebase/firebaseConfig';
+import './Jobs.css';
 
 const Jobs: React.FC = () => {
 
@@ -22,6 +22,7 @@ const Jobs: React.FC = () => {
       num: jobNum,
       description: jobDesc
     }
+
     try {
       await addDoc(holdJob, jobDoc);
     } catch (error) {
