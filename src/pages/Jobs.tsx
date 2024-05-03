@@ -18,7 +18,7 @@ const Jobs: React.FC = () => {
 
   const handleNewJob = () => {
     newJob(jobName, jobNum, jobDesc)
-  }
+  };
 
   const newJob = async (jobName: string, jobNum: string, jobDesc: string) => {
     if (jobName === '' || jobNum === '' || jobDesc === '') {
