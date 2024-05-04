@@ -1,26 +1,37 @@
 import { IonButton, IonContent, IonToggle, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import React, { useState, useEffect } from 'react';
-import { addDoc, collection } from 'firebase/firestore';
+import { collection, addDoc, getDocs, updateDoc, doc } from 'firebase/firestore';
 import { firestore } from '../firebase/firebaseConfig';
 import './Tab1.css';
 
 const Tab1: React.FC = () => {
   const [clockedIn, setClockedIn] = useState<boolean>(false);
   const [currentDate, setCurrentDate] = useState<string>('');
+  const user = collection(firestore, 'users');
 
   const clockInOut = async () => {
     const holdTime = collection(firestore, 'holdTime');
-    const timeDoc = {
-      currtime: { currentDate },
-      user: "Jake",
-    };
-    
+
     try {
       if (clockedIn) {
-        await addDoc(holdTime, timeDoc);
-        console.log('Clock Out: Document added successfully!');
+        // Clock out
+        const querySnapshot = await getDocs(holdTime);
+        querySnapshot.forEach((doc) => {
+          if (doc.data().user === "Jake" && !doc.data().clockout) {
+            const docRef = doc.ref;
+            updateDoc(docRef, { clockout: currentDate });
+            console.log('Clock Out: Document updated successfully!');
+          }
+        });
       } else {
-        console.log('Clock In');
+        // Clock in
+        const timeDoc = {
+          clockin: currentDate,
+          clockout: "",
+          user: "Jake",
+        };
+        await addDoc(holdTime, timeDoc);
+        console.log('Clock In: Document added successfully!');
       }
       setClockedIn(prevState => !prevState); // Toggle clockedIn state based on previous state
     } catch (error) {
