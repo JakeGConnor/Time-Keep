@@ -1,7 +1,8 @@
-import { IonContent, IonFooter, IonAlert, IonHeader, IonPage, IonList, IonItem, IonTitle, IonToolbar, IonButton, IonPopover, IonInput } from '@ionic/react';
+import { IonContent, IonFooter, IonAlert, IonHeader, IonPage, IonList, IonItem, IonTitle, IonToolbar, IonButton, IonPopover, IonInput, IonCard, IonCardHeader, IonCardTitle, IonCardContent } from '@ionic/react';
 import React, { useState, useEffect } from 'react';
 import { addDoc, collection } from 'firebase/firestore';
 import { firestore } from '../firebase/firebaseConfig';
+import CardList from '../components/CardList';
 import './Jobs.css';
 
 const Jobs: React.FC = () => {
@@ -52,7 +53,7 @@ const Jobs: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
-        <h1>Jobs</h1>
+        <CardList />
         <IonFooter id="Footer">
           <IonButton id="NewJob" className="NewJob" 
               onClick={handleJobClick}>New Job</IonButton>

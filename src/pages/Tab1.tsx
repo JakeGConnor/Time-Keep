@@ -1,4 +1,6 @@
-import { IonButton, IonContent, IonToggle, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import { IonButton, IonContent, IonToggle, IonHeader, IonPage, IonTitle, IonToolbar,
+  IonCard, IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle
+} from '@ionic/react';
 import React, { useState, useEffect } from 'react';
 import { collection, addDoc, getDocs, updateDoc, doc } from 'firebase/firestore';
 import { firestore } from '../firebase/firebaseConfig';
