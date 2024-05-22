@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { IonCard, IonCardHeader, IonCardTitle, IonCardContent } from '@ionic/react';
+import { IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonCardSubtitle } from '@ionic/react';
 import { collection, addDoc, getDocs, updateDoc, doc } from 'firebase/firestore';
 import { firestore } from '../firebase/firebaseConfig';
 
@@ -34,10 +34,10 @@ const CardList = () => {
         <IonCard key={job.id}>
           <IonCardHeader>
             <IonCardTitle>{job.name}</IonCardTitle>
+            <IonCardSubtitle>{job.num}</IonCardSubtitle>
           </IonCardHeader>
           <IonCardContent>
             <p>Description: {job.description}</p>
-            <p>Number: {job.num}</p>
           </IonCardContent>
         </IonCard>
       ))}
