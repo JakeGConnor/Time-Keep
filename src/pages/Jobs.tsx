@@ -13,7 +13,10 @@ const Jobs: React.FC = () => {
   const [showErrorAlert, setShowErrorAlert] = useState(false);
 
   const handleJobClick = () => {
-    if(showPopover == false){setShowPopover(true);}
+    if(showPopover == false){
+      setShowPopover(true);
+      
+    }
     else{setShowPopover(false);}
   };
 
