@@ -1,50 +1,69 @@
 import { IonContent, IonFooter, IonAlert, IonHeader, IonPage, IonList, IonItem, IonTitle, IonToolbar, IonButton, IonPopover, IonInput, IonCard, IonCardHeader, IonCardTitle, IonCardContent } from '@ionic/react';
 import React, { useState, useEffect } from 'react';
-import { addDoc, collection } from 'firebase/firestore';
+import { collection, addDoc, getDocs, updateDoc, doc } from 'firebase/firestore';
 import { firestore } from '../firebase/firebaseConfig';
 import CardList from '../components/CardList';
 import './Jobs.css';
 
+interface Job {
+  id: string;
+  name: string;
+  description: string;
+  num: number;
+}
+
 const Jobs: React.FC = () => {
   const [showPopover, setShowPopover] = useState(false);
   const [jobName, setJobName] = useState('');
-  const [jobNum, setJobNum] = useState('');
+  const [jobNum, setJobNum] = useState<number>(0);
   const [jobDesc, setJobDesc] = useState('');
   const [showErrorAlert, setShowErrorAlert] = useState(false);
+  const [highestJobNum, setHighestJobNum] = useState(0);
 
-  const handleJobClick = () => {
-    if(showPopover == false){
+  const handleJobClick = async () => {
+    if (!showPopover) {
       setShowPopover(true);
-      
+      try {
+        const jobsCollection = collection(firestore, 'jobs');
+        const querySnapshot = await getDocs(jobsCollection);
+        const jobsData = querySnapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        })) as Job[];
+
+        const highestNum = jobsData.reduce((max, job) => (job.num > max ? job.num : max), 0);
+        setHighestJobNum(highestNum);
+        let nextNum = Number(highestJobNum) + Number(1);
+        setJobNum(nextNum);
+      } catch (error) {
+        console.error('Error fetching jobs:', error);
+      }
+    } else {
+      setShowPopover(false);
     }
-    else{setShowPopover(false);}
   };
 
   const handleNewJob = () => {
-    newJob(jobName, jobNum, jobDesc)
+    newJob(jobName, jobNum, jobDesc);
   };
 
-  const newJob = async (jobName: string, jobNum: string, jobDesc: string) => {
-    if (jobName === '' || jobNum === '' || jobDesc === '') {
+  const newJob = async (jobName: string, jobNum: number, jobDesc: string) => {
+    if (!jobName || jobNum === null || !jobDesc) {
       setShowErrorAlert(true);
-    } else {
-      const holdJob = collection(firestore, 'jobs');
-  
-      const jobDoc = {
-        name: jobName,
-        num: jobNum,
-        description: jobDesc,
-      };
-  
-      try {
-        await addDoc(holdJob, jobDoc);
-        setJobName('');
-        setJobNum('');
-        setJobDesc('');
-        setShowPopover(false);
-      } catch (error) {
-        console.error('Error: ', error);
-      }
+      return;
+    }
+
+    const jobsCollection = collection(firestore, 'jobs');
+    const jobDoc = { name: jobName, num: jobNum, description: jobDesc };
+
+    try {
+      await addDoc(jobsCollection, jobDoc);
+      setJobName('');
+      setJobNum(jobNum);
+      setJobDesc('');
+      setShowPopover(false);
+    } catch (error) {
+      console.error('Error adding job:', error);
     }
   };
 
@@ -70,8 +89,8 @@ const Jobs: React.FC = () => {
                       </IonInput>
                     </IonItem>
                     <IonItem>
-                      <IonInput label="Enter Job Number" labelPlacement='stacked'
-                        value={jobNum} onIonChange={(e) => setJobNum(e.detail.value!)}>
+                      <IonInput label="Job Number (Change at Your Own Risk)" labelPlacement='stacked'
+                        value={jobNum} onIonChange={(e) => setJobNum(Number(e.detail.value!))}>
                       </IonInput>
                     </IonItem>
                     <IonItem>
