@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonCardSubtitle } from '@ionic/react';
 import { collection, addDoc, getDocs, updateDoc, doc } from 'firebase/firestore';
 import { firestore } from '../firebase/firebaseConfig';
+import './CardList.css';
 
 interface Job {
   id: string;
@@ -32,11 +33,11 @@ const CardList = () => {
     <div>
       {jobs.map((job) => (
         <IonCard key={job.id}>
-          <IonCardHeader>
-            <IonCardTitle>{job.name}</IonCardTitle>
-            <IonCardSubtitle>{job.num}</IonCardSubtitle>
+          <IonCardHeader class="container">
+            <IonCardTitle class="item1">{job.name}</IonCardTitle>
+            <IonCardSubtitle class="item2">{job.num}</IonCardSubtitle>
           </IonCardHeader>
-          <IonCardContent>
+          <IonCardContent class="desc">
             <p>Description: {job.description}</p>
           </IonCardContent>
         </IonCard>

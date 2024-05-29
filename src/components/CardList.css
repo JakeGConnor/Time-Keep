@@ -1,0 +1,19 @@
+.container {
+    display: grid;
+    grid-template-columns: auto auto; /* Adjust the number of columns and their widths */
+    margin-top: -5%;
+    width: 100%;
+}
+
+.item1{
+    justify-self: start;
+}
+.item2{
+    justify-self: end;
+}
+
+.desc{
+    margin-top: 15%;
+    padding-left: 20px;
+    padding-right: 20px;
+}
