@@ -5,7 +5,7 @@ import { getFirestore, enableIndexedDbPersistence } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
 
 const firebaseConfig = {
-    apiKey: "AIzaSyAnRCTxK1wLmjyBbUZxJm-yWNGimGHo6xk",
+    apiKey: "",
     authDomain: "timekeeper-1b35e.firebaseapp.com",
     projectId: "timekeeper-1b35e",
     storageBucket: "timekeeper-1b35e.appspot.com",
