@@ -33,14 +33,13 @@ const CardList = () => {
     <div>
       {jobs.map((job) => (
         <IonCard key={job.id}>
-          <IonCardHeader class="container">
-            <IonCardTitle class="item1">{job.name}</IonCardTitle>
-            <IonCardSubtitle class="item2">{job.num}</IonCardSubtitle>
-          </IonCardHeader>
-          <IonCardContent class="desc">
-            <p>Description: {job.description}</p>
+            <IonCardTitle className="title">{job.name}
+              <IonCardSubtitle style = {{float: 'right'}} className="item2">{job.num}</IonCardSubtitle>
+            </IonCardTitle>
+          <IonCardContent className="desc">
+            <p>{job.description}</p>
           </IonCardContent>
-        </IonCard>
+      </IonCard>
       ))}
     </div>
   );
