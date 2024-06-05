@@ -1,0 +1,34 @@
+.signIn {
+    width: 100%;
+    --background: #670000;
+    --color: white;
+}
+
+.newUser {
+    color: white;
+}
+
+.centered-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+  
+  .ion-padding {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
+  
+  .centered-content > * {
+    width: 100%;
+    max-width: 400px; /* Set a max-width for the content */
+  }
+  
+  .centered-content ion-item,
+  .centered-content ion-button {
+    margin-top: 10px;
+  }
